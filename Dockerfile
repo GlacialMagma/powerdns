@@ -44,7 +44,7 @@ RUN install_packages \
 RUN cd /tmp && \
     # Default modules 'bind gmysql random'
     ./configure --with-dynmodules='geoip godbc gpgsql gsqlite3 ldap mydns pipe remote tinydns' --without-lua --sysconfdir=/etc/pdns  && \
-    make -j 9 && \
+    make && \
     make install-strip
 
 # Main Image
