@@ -1,5 +1,5 @@
+# Build
 FROM bitnami/minideb:stretch as build1
-
 
 # Required for retrieving source
 RUN install_packages \
@@ -47,7 +47,7 @@ RUN cd /tmp && \
     make -j 9 && \
     make install-strip
 
-
+# Main Image
 FROM debian:9.5-slim
 
 RUN apt-get update && apt-get -y --no-install-recommends install \
@@ -61,3 +61,17 @@ COPY --from=build1 /usr/local/bin /usr/local/bin/
 COPY --from=build1 /usr/local/sbin /usr/local/sbin/
 COPY --from=build1 /usr/local/lib/pdns /usr/local/lib/pdns/
 COPY --from=build1 /etc/pdns /etc/pdns/
+
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL maintainer="dan@glacialmagma.com" \
+    org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.name="PowerDNS" \
+    org.label-schema.description="PowerDNS Authoritative DNS" \
+    org.label-schema.url="https://www.powerdns.com/" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vcs-url="https://github.com/GlacialMagma/powerdns" \
+    org.label-schema.vendor="GlacialMagma" \
+    org.label-schema.version=$VERSION \
+    org.label-schema.schema-version="1.0"
