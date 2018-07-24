@@ -61,3 +61,6 @@ COPY --from=build1 /usr/local/bin /usr/local/bin/
 COPY --from=build1 /usr/local/sbin /usr/local/sbin/
 COPY --from=build1 /usr/local/lib/pdns /usr/local/lib/pdns/
 COPY --from=build1 /etc/pdns /etc/pdns/
+
+EXPOSE 53/tcp
+EXPOSE 53/udp
